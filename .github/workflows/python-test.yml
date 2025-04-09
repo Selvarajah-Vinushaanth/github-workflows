@@ -1,28 +1,49 @@
-name: Python Test Workflow
+name: Multiple Jobs on Different Runners
 
 on:
   push:
     branches:
-      - main  # Trigger when code is pushed to the 'main' branch
+      - main
 
 jobs:
-  run-python-script:
-    runs-on: ubuntu-latest  # Runs on Ubuntu (you can change this to other OS if needed)
+  job1:
+    runs-on: ubuntu-latest  # Job 1 runs on Ubuntu
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2  # Checkout the code in the repository
-
+        uses: actions/checkout@v2
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.8'  # Set up Python version 3.8
-
-      - name: Install dependencies
+          python-version: '3.8'
+      - name: Run hello.py on Ubuntu
         run: |
-          python -m pip install --upgrade pip  # Upgrade pip
-          pip install pytest  # Install pytest (optional, for future tests)
+          python hello.py
 
-      - name: Run hello.py
+  job2:
+    runs-on: windows-latest  # Job 2 runs on Windows
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Run hello.py on Windows
         run: |
-          python hello.py  # Run your hello.py script
+          python hello.py
+
+  job3:
+    runs-on: macos-latest  # Job 3 runs on macOS
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Run hello.py on macOS
+        run: |
+          python hello.py
