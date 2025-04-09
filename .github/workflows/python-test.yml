@@ -1,0 +1,28 @@
+name: Python Test Workflow
+
+on:
+  push:
+    branches:
+      - main  # Trigger when code is pushed to the 'main' branch
+
+jobs:
+  run-python-script:
+    runs-on: ubuntu-latest  # Runs on Ubuntu (you can change this to other OS if needed)
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2  # Checkout the code in the repository
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'  # Set up Python version 3.8
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip  # Upgrade pip
+          pip install pytest  # Install pytest (optional, for future tests)
+
+      - name: Run hello.py
+        run: |
+          python hello.py  # Run your hello.py script
